@@ -3,7 +3,7 @@ import sqlite3
 
 
 class Database(object):
-    def __init__(self, db_name=None):
+    def __init__(self):
         self.db_name = 'without_sql_alchemy.db'
 
     @classmethod
@@ -33,7 +33,8 @@ class Database(object):
             return False
 
     def insert_data(self, **kwargs):
-        print('\nHello from insert_data, the **kwargs values are ', kwargs)
+        # print('\nHello from insert_data, the **kwargs values are ', kwargs,
+        #       'the db name is', self.db_name)
         """
         Expects any number of named arguments but must include a table name.
 
@@ -65,7 +66,7 @@ class Database(object):
     def make_query(self, query_string):
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
-            return [x for x in c.execute(query_string)][0][0]
+            return [x for x in c.execute(query_string)]
 
     def get_row(self, table_name, id_name, id_value):
         with sqlite3.connect(self.db_name) as connection:
@@ -74,12 +75,17 @@ class Database(object):
                     table_name, id_name, id_value)):
                 return list(row)
 
+    def get_rows(self, table_name):
+        with sqlite3.connect(self.db_name) as connection:
+            c = connection.cursor()
+            return [x for x in c.execute("SELECT * FROM {}".format(table_name))]
+
 
 if __name__ == "__main__":
     db = Database()
     # db.db_name = 'without_sql_alchemy.db'
 
-    db.make_db()
+    # db.make_db()
 
     # db.make_query(
     #     '''
@@ -88,8 +94,8 @@ if __name__ == "__main__":
     #     '''
     # )
 
-    print(db.make_query(
-        '''
-        SELECT * from user
-        '''
-    ))
+    # print(db.make_query(
+    #     '''
+    #     SELECT * from user
+    #     '''
+    # ))

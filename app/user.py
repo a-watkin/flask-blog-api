@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from model.blog_db import Database
+from model import Database
 
 
 class User(object):
@@ -16,6 +16,7 @@ class User(object):
         return check_password_hash(password_hash, password)
 
     def check_username(self):
+        print('check_username called')
         """
         Checks if the username is in the database.
         """
@@ -32,7 +33,9 @@ class User(object):
         )
         if hashed_password is not None:
             print(hashed_password)
-            return self.verify_password(hashed_password, self.password)
+            return self.verify_password(
+                hashed_password[0][0], self.password
+            )
         else:
             return False
 
@@ -63,7 +66,13 @@ class User(object):
 
 
 if __name__ == "__main__":
-    u = User('test2', 'test2')
+    u = User('test1', 'test1')
+    # u.set_new_user()
+
+    # u1 = User('test2', 'test2')
+    # u1.set_new_user()
 
     # print(u.set_new_user())
-    print(u.check_credentials())
+    # print(u.check_credentials())
+
+    print()
