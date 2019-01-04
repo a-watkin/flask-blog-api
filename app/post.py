@@ -23,6 +23,7 @@ class Post(object):
 
     def get_post(self, post_id):
         data = self.db.get_row('post', 'post_id', post_id)
+        return data
 
     def create_post(self):
         self.db.insert_data(
@@ -76,7 +77,7 @@ if __name__ == "__main__":
         content='some other content',
     )
 
-    p.create_post()
+    print(p.get_post(905837544))
 
     # print(p.post_id, p.title, p.content, p.date_posted)
 

@@ -69,23 +69,37 @@ class Database(object):
             return [x for x in c.execute(query_string)]
 
     def get_row(self, table_name, id_name, id_value):
+        q_data = None
         with sqlite3.connect(self.db_name) as connection:
             c = connection.cursor()
-            for row in c.execute('''SELECT * FROM {} WHERE {} = "{}" '''.format(
-                    table_name, id_name, id_value)):
-                return list(row)
+            c.row_factory = sqlite3.Row
+            q_data = c.execute(
+                '''
+                SELECT * FROM {} WHERE {} = "{}"
+                '''.format(
+                    table_name, id_name, id_value
+                )
+            )
+
+        return [dict(ix) for ix in q_data]
 
     def get_rows(self, table_name):
+        q_data = None
         with sqlite3.connect(self.db_name) as connection:
             c = connection.cursor()
-            return [x for x in c.execute("SELECT * FROM {}".format(table_name))]
+            c.row_factory = sqlite3.Row
+            q_data = c.execute(
+                '''
+                SELECT * FROM {}
+                '''.format(table_name))
+
+        return [dict(ix) for ix in q_data]
 
     def get_query_as_list(self, query_string):
         q_data = None
         with sqlite3.connect(self.db_name) as connection:
             c = connection.cursor()
             c.row_factory = sqlite3.Row
-            query_string = (query_string)
             q_data = c.execute(query_string)
 
         return [dict(ix) for ix in q_data]
