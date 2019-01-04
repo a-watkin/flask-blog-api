@@ -6,6 +6,10 @@ class Database(object):
     def __init__(self, db_name=None):
         self.db_name = 'without_sql_alchemy.db'
 
+    @classmethod
+    def get_placeholders(cls, num):
+        return ','.join(['?' for x in list(range(num))])
+
     def make_db(self):
         from db_schema import create_database
         # db_schema.create_database(name)
@@ -28,11 +32,47 @@ class Database(object):
             print('Database not found')
             return False
 
+    def insert_data(self, **kwargs):
+        print('\nHello from insert_data, the **kwargs values are ', kwargs)
+        """
+        Expects any number of named arguments but must include a table name.
+
+        db.insert_data(
+        table='tag',
+        tag_name=new_tag,
+        user_id='28035310@N00'
+        )
+        """
+
+        table_name = kwargs['table']
+        del kwargs['table']
+
+        data = [tuple(kwargs.values())]
+
+        placeholders = self.get_placeholders(len(kwargs))
+
+        try:
+            with sqlite3.connect(self.db_name) as connection:
+                query_string = ('INSERT INTO {} VALUES({})'.format(
+                    table_name, placeholders), data)
+
+                c = connection.cursor()
+                c.executemany('INSERT INTO {} VALUES({})'.format(
+                    table_name, placeholders), data)
+        except Exception as e:
+            print('insert_data problem ', e)
+
     def make_query(self, query_string):
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
-            # print(query_string)
-            return [x for x in c.execute(query_string)]
+            return [x for x in c.execute(query_string)][0][0]
+
+    def get_row(self, table_name, id_name, id_value):
+        with sqlite3.connect(self.db_name) as connection:
+            c = connection.cursor()
+            for row in c.execute('''SELECT * FROM {} WHERE {} = "{}" '''.format(
+                    table_name, id_name, id_value)):
+                return list(row)
 
 
 if __name__ == "__main__":

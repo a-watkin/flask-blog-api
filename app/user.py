@@ -4,7 +4,9 @@ from model.blog_db import Database
 
 class User(object):
 
-    def __init__(self):
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
         self.db = Database()
 
     def get_password_hash(self, password):
@@ -13,10 +15,55 @@ class User(object):
     def verify_password(self, password_hash, password):
         return check_password_hash(password_hash, password)
 
+    def check_username(self):
+        """
+        Checks if the username is in the database.
+        """
+        db_resp = self.db.get_row('user', 'username', self.username)
+        if db_resp is None:
+            return False
+        return True
+
+    def check_password(self):
+        hashed_password = self.db.make_query(
+            '''
+            SELECT hash FROM user WHERE username = "{}"
+            '''.format(self.username)
+        )
+        if hashed_password is not None:
+            print(hashed_password)
+            return self.verify_password(hashed_password, self.password)
+        else:
+            return False
+
+    def check_credentials(self):
+        if self.check_username and self.check_password():
+            return True
+        return False
+
+    def set_password(self):
+        hashed_password = self.get_password_hash(self.password)
+
+        self.db.make_query(
+            '''
+            UPDATE user
+            SET hash = "{}"
+            WHERE username = "{}"
+            '''.format(hashed_password, self.username)
+        )
+
+    def set_new_user(self):
+        hashed_password = self.get_password_hash(self.password)
+
+        self.db.insert_data(
+            table='user',
+            username=self.username,
+            hash=hashed_password
+        )
+
 
 if __name__ == "__main__":
-    u = User()
-    print(u.get_password_hash('beans'))
-    print(u.verify_password(
-        'pbkdf2:sha256:50000$3yB6XOHP$f7f17c90a6989ac51805b772691bc3166373c06ce45b7d349b210f9795a9b787',
-        'test'))
+    u = User('test2', 'test2')
+
+    # print(u.set_new_user())
+    print(u.check_credentials())
