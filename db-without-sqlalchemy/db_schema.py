@@ -1,9 +1,9 @@
 import sqlite3
 
 
-def create_database():
+def create_database(db_name):
 
-    conn = sqlite3.connect('without_sql_alchemy.db')
+    conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
     cursor.execute(
