@@ -26,7 +26,7 @@ class User(object):
         return True
 
     def check_password(self):
-        hashed_password = self.db.make_query(
+        hashed_password = self.db.get_query_as_list(
             '''
             SELECT hash FROM user WHERE username = "{}"
             '''.format(self.username)
@@ -34,7 +34,7 @@ class User(object):
         if hashed_password is not None:
             print(hashed_password)
             return self.verify_password(
-                hashed_password[0][0], self.password
+                hashed_password[0]['hash'], self.password
             )
         else:
             return False
