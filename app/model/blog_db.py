@@ -80,9 +80,26 @@ class Database(object):
             c = connection.cursor()
             return [x for x in c.execute("SELECT * FROM {}".format(table_name))]
 
+    def get_query_as_list(self, query_string):
+        q_data = None
+        with sqlite3.connect(self.db_name) as connection:
+            c = connection.cursor()
+            c.row_factory = sqlite3.Row
+            query_string = (query_string)
+            q_data = c.execute(query_string)
+
+        return [dict(ix) for ix in q_data]
+
 
 if __name__ == "__main__":
     db = Database()
+
+    print(db.get_query_as_list(
+        '''
+        SELECT * FROM post
+        '''
+    ))
+
     # db.db_name = 'without_sql_alchemy.db'
 
     # db.make_db()

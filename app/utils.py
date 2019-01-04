@@ -3,7 +3,7 @@ import uuid
 
 
 def get_id():
-    return str(int(uuid.uuid4()))[0:10]
+    return int(str(int(uuid.uuid4()))[0:10])
 
 
 def url_encode_tag(a_str):
@@ -15,7 +15,6 @@ def url_decode_tag(a_str):
 
 
 def make_decoded(a_str):
-    # print('hello from make decoded passed the value, ', a_str)
     if '%' in a_str:
         return url_decode_tag(a_str)
     else:
@@ -30,7 +29,6 @@ def make_encoded(a_str):
 
     If not return it unencoded.
     """
-    # print('hello from check_chars', a_str)
     forbidden = [";", "/", "?", ":", "@", "=", "&", '"', "'", "<", ">",
                  "#", "{", "}", "|", "\\", "/", "^", "~", "[", "]", "`", " "]
     for char in a_str:
@@ -39,6 +37,3 @@ def make_encoded(a_str):
             return url_encode_tag(a_str)
 
     return a_str
-
-
-print(get_id())
