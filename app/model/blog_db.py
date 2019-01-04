@@ -4,7 +4,7 @@ import sqlite3
 
 class Database(object):
     def __init__(self, db_name=None):
-        self.db_name = db_name
+        self.db_name = 'without_sql_alchemy.db'
 
     def make_db(self):
         from db_schema import create_database
@@ -37,12 +37,19 @@ class Database(object):
 
 if __name__ == "__main__":
     db = Database()
-    db.db_name = 'without_sql_alchemy.db'
+    # db.db_name = 'without_sql_alchemy.db'
 
     db.make_db()
 
-    # print(db.make_query(
+    # db.make_query(
     #     '''
-    #     SELECT * from user
+    #     INSERT into user (username)
+    #     VALUES ('test')
     #     '''
-    # ))
+    # )
+
+    print(db.make_query(
+        '''
+        SELECT * from user
+        '''
+    ))
