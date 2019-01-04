@@ -4,7 +4,6 @@ from flask import Flask
 
 def create_app(config_name):
     """Create an application instance."""
-    print('called')
     app = Flask(__name__)
 
     # apply configuration
