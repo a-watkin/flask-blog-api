@@ -1,7 +1,11 @@
+import sqlite3
+
+
 class Database(object):
     def __init__(self, db_name=None):
         self.db = db_name
 
+    @classmethod
     def make_db(cls, name):
         from db_schema import create_database
         # db_schema.create_database(name)
@@ -36,12 +40,3 @@ class Database(object):
 def main():
     db = Database()
     db.db_name = 'without_sql_alchemy.db'
-
-    def make_tables():
-        db.make_db(db.name)
-        db.make_user_table()
-        db.make_post_table()
-        db.make_tag_table()
-        db.make_post_tag_table()
-
-    make_tables()
