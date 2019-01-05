@@ -107,12 +107,13 @@ class Database(object):
 
 if __name__ == "__main__":
     db = Database()
+    print(db.db_name)
 
-    print(db.get_query_as_list(
-        '''
-        SELECT * FROM post
-        '''
-    ))
+    # print(db.get_query_as_list(
+    #     '''
+    #     SELECT * FROM post
+    #     '''
+    # ))
 
     # db.db_name = 'without_sql_alchemy.db'
 

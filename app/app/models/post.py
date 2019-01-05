@@ -1,21 +1,31 @@
+# try:
+#     import os
+#     import sys
+#     from .utils import *
+# except Exception as e:
+#     print('problem ', e)
+#     sys.path.append('/'.join(os.path.join(os.getcwd()).split('/')[:-1]))
+#     print(sys.path)
+# from utils import *
 
-import datetime
-
-from model.blog_db import Database
-from utils import get_id
+import os
+import sys
 
 
 class Post(object):
-    def __init__(self, title=None, content=None, id=None):
-        self.post_id = None
+    def __init__(self, title=None, content=None):
+        self.username = None
         self.title = title
         self.content = content
         self.date_posted = datetime.datetime.now()
         self.date_published = None
-        self.db = Database()
+        self.db = Database(),
+        # if you put this as the first arg it will be a tuple because
+        # of the trailing comma...sigh
+        self.post_id = get_id()
 
-        if self.post_id == None:
-            self.post_id = get_id()
+        # if self.post_id is None:
+        #     self.post_id = get_id()
 
     def get_posts(self):
         data = self.db.get_rows('post')
@@ -28,12 +38,12 @@ class Post(object):
     def create_post(self):
         self.db.insert_data(
             table='post',
-            post_id=self.post_id,
-            username="testuser",
+            username=self.username,
             title=self.title,
             content=self.content,
             date_posted=self.date_posted,
             date_published=self.date_published,
+            post_id=self.post_id
         )
 
     def update_post(self, post_id):
@@ -61,7 +71,7 @@ class Post(object):
     def remove_post(self, post_id):
         self.db.make_query(
             '''
-            DELETE FROM post WHERE post_id = "{}"; 
+            DELETE FROM post WHERE post_id = "{}";
             '''.format(post_id)
         )
 
@@ -72,12 +82,34 @@ class Post(object):
 
 
 if __name__ == "__main__":
-    p = Post(
-        title='test post 2',
-        content='some other content',
-    )
+    print()
+    print(sys.path)
 
-    print(p.get_post(905837544))
+    print(
+        sys.path.append(os.path.join(os.getcwd()))
+    )
+    print()
+    print(sys.path)
+
+    # p = Post(
+    #     title='test post 2',
+    #     content='some other content'
+    # )
+
+    # print(
+    #     p.username,
+    #     p.title,
+    #     p.content,
+    #     p.date_posted,
+    #     p.date_published,
+    #     p.post_id
+    # )
+
+    # print('post_id is: ', p.post_id, type(p.post_id))
+    # p.post_id = get_id()
+    # print('post_id is: ', p.post_id, type(p.post_id))
+
+    # print(p.get_post(905837544))
 
     # print(p.post_id, p.title, p.content, p.date_posted)
 
