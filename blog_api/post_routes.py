@@ -9,6 +9,7 @@ post_blueprint = Blueprint('post', __name__)
 @post_blueprint.route('/', methods=['GET'])
 def test():
     p = Post()
+    print('post is ', p)
     posts = p.get_posts()
     return jsonify(posts)
 

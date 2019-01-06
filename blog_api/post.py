@@ -3,44 +3,39 @@ import os
 import sys
 import datetime
 
+try:
+    """
+    Running as flask app.
+    """
+    from .blog_db import Database
+    from .utils import get_id
+except Exception as e:
+    """
+    Running as module.
+    """
+    print('\nRunning as a module, for testing\n')
+    # print(e)
+    # sys.path.append('/home/a/flask-blog-api/app')
+    # print('added to path ', sys.path)
 
-# print(
-#     'print \n',
-#     sys.path,
-#     os.getcwd(), '\n',
-#     os.listdir(), '\n',
-#     sys.path.append('/'.join(os.path.join(os.getcwd()).split('/')[:-1]))
-# )
-
-# try:
-#     # from app import utils
-#     from app.utils import get_id
-#     from app.blog_db import Database
-# except Exception as e:
-#     print(e)
-#     sys.path.append('/home/a/flask-blog-api/app')
-#     print('added to path ', sys.path)
-
-#     from utils import get_id
-#     from blog_db import Database
-
-from .blog_db import Database
-from .utils import get_id
+    from utils import get_id
+    from blog_db import Database
 
 
 class Post(object):
     def __init__(self, title=None, content=None):
-        self.username = None
+        self.post_id = get_id()
+        self.username = 'a'
         self.title = title
         self.content = content
         self.date_posted = datetime.datetime.now()
         self.date_published = None
-        self.post_id = get_id()
+        # access to the db
         self.db = Database()
 
     def get_posts(self):
         data = self.db.get_rows('post')
-        print(data)
+        return data
 
     def get_post(self, post_id):
         data = self.db.get_row('post', 'post_id', post_id)
@@ -95,6 +90,12 @@ class Post(object):
 
 
 if __name__ == "__main__":
+    p = Post()
+
+    print(
+        p.get_posts()
+    )
+
     # print()
     # print(sys.path)
 
@@ -117,6 +118,8 @@ if __name__ == "__main__":
         p.date_published,
         p.post_id
     )
+
+    p.create_post()
 
     # print('post_id is: ', p.post_id, type(p.post_id))
     # p.post_id = get_id()
