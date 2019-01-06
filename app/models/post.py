@@ -1,19 +1,28 @@
-# try:
-#     import os
-#     import sys
-#     from .utils import *
-# except Exception as e:
-#     print('problem ', e)
-#     sys.path.append('/'.join(os.path.join(os.getcwd()).split('/')[:-1]))
-#     print(sys.path)
-# from utils import *
 
 import os
 import sys
 import datetime
 
-from app.blog_db import Database
-from app.utils import get_id
+
+print(
+    'print \n',
+    sys.path,
+    os.getcwd(), '\n',
+    os.listdir(), '\n',
+    sys.path.append('/'.join(os.path.join(os.getcwd()).split('/')[:-1]))
+)
+
+try:
+    # from app import utils
+    from app.utils import get_id
+    from app.blog_db import Database
+except Exception as e:
+    print(e)
+    sys.path.append('/home/a/flask-blog-api/app')
+    print('added to path ', sys.path)
+
+    from utils import get_id
+    from blog_db import Database
 
 
 class Post(object):
@@ -39,12 +48,12 @@ class Post(object):
         # test says this is a tuple
         self.db.insert_data(
             table='post',
+            post_id=self.post_id,
             username=self.username,
             title=self.title,
             content=self.content,
             date_posted=self.date_posted,
-            date_published=self.date_published,
-            post_id=self.post_id
+            date_published=self.date_published
         )
 
     def update_post(self, post_id):
