@@ -1,7 +1,7 @@
 import unittest
 
 from app.models.user import User
-from app.database.blog_db import Database
+from app.blog_db import Database
 
 
 class TestUser(unittest.TestCase):

@@ -7,7 +7,7 @@ try:
     from blog_db import Database
 except Exception as e:
     sys.path.append(os.path.join(os.getcwd()))
-    from app.database.blog_db import Database
+    from app.blog_db import Database
 
 
 class User(object):

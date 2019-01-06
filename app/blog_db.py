@@ -4,10 +4,10 @@ import sqlite3
 
 class Database(object):
     def __init__(self):
-        # self.db_name = 'without_sql_alchemy.db'
+        self.db_name = 'without_sql_alchemy.db'
 
         # having some issue with importing so, specifying the path to the db
-        self.db_name = os.path.join(os.getcwd(), 'without_sql_alchemy.db')
+        # self.db_name = os.path.join(os.getcwd(), 'without_sql_alchemy.db')
 
     @classmethod
     def get_placeholders(cls, num):
@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
     # print(db.get_rows('post'))
 
-    # db.make_db()
+    db.make_db()
 
     # print(db.db_name)
 
