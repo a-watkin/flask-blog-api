@@ -1,6 +1,6 @@
 import unittest
 
-from database import blog_db
+from app.blog_db import Database
 from app.models.post import Post
 
 

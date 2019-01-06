@@ -111,30 +111,25 @@ class Database(object):
 if __name__ == "__main__":
     db = Database()
 
-    # print(os.path.join(os.getcwd(), db.db_name))
+    db.make_query(
+        '''
+        INSERT into user (username)
+        VALUES ('test')
+        '''
+    )
 
-    # print(db.get_rows('post'))
+    import datetime
+    from utils import get_id
 
-    db.make_db()
-
-    # print(db.db_name)
-
-    # print(db.get_query_as_list(
-    #     '''
-    #     SELECT * FROM post
-    #     '''
-    # ))
-
-    # db.db_name = 'without_sql_alchemy.db'
-
-    # db.make_db()
-
-    # db.make_query(
-    #     '''
-    #     INSERT into user (username)
-    #     VALUES ('test')
-    #     '''
-    # )
+    db.insert_data(
+        table='post',
+        username='test',
+        title='rapidly losing the will to live over here',
+        content='please somebody just kill me now',
+        date_posted=datetime.datetime.now(),
+        date_published=None,
+        post_id=get_id()
+    )
 
     # print(db.make_query(
     #     '''

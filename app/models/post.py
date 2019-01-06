@@ -10,6 +10,10 @@
 
 import os
 import sys
+import datetime
+
+from app.blog_db import Database
+from app.utils import get_id
 
 
 class Post(object):
@@ -19,13 +23,8 @@ class Post(object):
         self.content = content
         self.date_posted = datetime.datetime.now()
         self.date_published = None
-        self.db = Database(),
-        # if you put this as the first arg it will be a tuple because
-        # of the trailing comma...sigh
         self.post_id = get_id()
-
-        # if self.post_id is None:
-        #     self.post_id = get_id()
+        self.db = Database()
 
     def get_posts(self):
         data = self.db.get_rows('post')
@@ -36,6 +35,8 @@ class Post(object):
         return data
 
     def create_post(self):
+        print(self.db, type(self.db))
+        # test says this is a tuple
         self.db.insert_data(
             table='post',
             username=self.username,
@@ -82,28 +83,28 @@ class Post(object):
 
 
 if __name__ == "__main__":
-    print()
-    print(sys.path)
-
-    print(
-        sys.path.append(os.path.join(os.getcwd()))
-    )
-    print()
-    print(sys.path)
-
-    # p = Post(
-    #     title='test post 2',
-    #     content='some other content'
-    # )
+    # print()
+    # print(sys.path)
 
     # print(
-    #     p.username,
-    #     p.title,
-    #     p.content,
-    #     p.date_posted,
-    #     p.date_published,
-    #     p.post_id
+    #     sys.path.append(os.path.join(os.getcwd()))
     # )
+    # print()
+    # print(sys.path)
+
+    p = Post(
+        title='test post 2',
+        content='some other content'
+    )
+
+    print(
+        p.username,
+        p.title,
+        p.content,
+        p.date_posted,
+        p.date_published,
+        p.post_id
+    )
 
     # print('post_id is: ', p.post_id, type(p.post_id))
     # p.post_id = get_id()
