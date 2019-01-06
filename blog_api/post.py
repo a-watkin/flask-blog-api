@@ -4,25 +4,28 @@ import sys
 import datetime
 
 
-print(
-    'print \n',
-    sys.path,
-    os.getcwd(), '\n',
-    os.listdir(), '\n',
-    sys.path.append('/'.join(os.path.join(os.getcwd()).split('/')[:-1]))
-)
+# print(
+#     'print \n',
+#     sys.path,
+#     os.getcwd(), '\n',
+#     os.listdir(), '\n',
+#     sys.path.append('/'.join(os.path.join(os.getcwd()).split('/')[:-1]))
+# )
 
-try:
-    # from app import utils
-    from app.utils import get_id
-    from app.blog_db import Database
-except Exception as e:
-    print(e)
-    sys.path.append('/home/a/flask-blog-api/app')
-    print('added to path ', sys.path)
+# try:
+#     # from app import utils
+#     from app.utils import get_id
+#     from app.blog_db import Database
+# except Exception as e:
+#     print(e)
+#     sys.path.append('/home/a/flask-blog-api/app')
+#     print('added to path ', sys.path)
 
-    from utils import get_id
-    from blog_db import Database
+#     from utils import get_id
+#     from blog_db import Database
+
+from .blog_db import Database
+from .utils import get_id
 
 
 class Post(object):

@@ -1,7 +1,7 @@
 import unittest
 
 from app.blog_db import Database
-from app.models.post import Post
+from app.post import Post
 
 
 class TestPost(unittest.TestCase):
