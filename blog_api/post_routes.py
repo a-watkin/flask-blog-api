@@ -26,8 +26,8 @@ def create_post(post_id):
     pass
 
 
-@post_blueprint.route('/api/post/<int:id>', methods=['PUT'])
-def edit_post(id):
+@post_blueprint.route('/<int:post_id>', methods=['PUT'])
+def edit_post(post_id):
     """
     Update the specified post.
     """
