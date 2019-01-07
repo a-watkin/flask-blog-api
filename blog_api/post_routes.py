@@ -32,13 +32,24 @@ def create_post(post_id):
 
     if post_data:
         print('what is post data here?', post_data)
-        for key, value in args:
-            setattr(p, key, args[key])
+        # for key, value in args:
+        #     setattr(p, key, args[key])
+
+        # if args has a key that is also in p then
+        # update the value of p to be that of args
+        print('args values are ', args)
+        for key in args.keys():
+            if key in post_data[0]:
+                post_data[0][key] = args[key]
+            print(key)
+
+        # make new instance of Post with the data from the db
+        p = Post(post_data[0])
 
         import inspect
         print(inspect.getmembers(p, lambda a: not(inspect.isroutine(a))))
 
-        return jsonify({}), 201
+        return jsonify(post_data), 201
     else:
         print('resource does not exist')
     return jsonify({}), 404
