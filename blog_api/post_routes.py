@@ -21,9 +21,9 @@ def get_post(post_id):
     return jsonify(posts)
 
 
-@post_blueprint.route('/<int:post_id>', methods=['POST'])
-def create_post(post_id):
-    pass
+@post_blueprint.route('/', methods=['POST'])
+def create_post():
+    return 'you got to the post endpoint'
 
 
 @post_blueprint.route('/<int:post_id>', methods=['PUT'])

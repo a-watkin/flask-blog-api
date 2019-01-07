@@ -42,6 +42,21 @@ class Post(object):
         # access to the db
         self.db = Database()
 
+        # this is not ideal, but I need some default values
+        # if none are supplied and I also need to make
+        # class instances from key value pairs
+        if 'post_id' not in kwargs:
+            self.post_id = get_id()
+
+        if 'username' not in kwargs:
+            self.username = 'a'
+
+        if 'datetime_posted' not in kwargs:
+            self.datetime_posted = datetime.datetime.now()
+
+        if 'datetime_published' not in kwargs:
+            self.datetime_published = None
+
     def __repr__(self):
         pass
 
@@ -72,8 +87,8 @@ class Post(object):
             username=self.username,
             title=self.title,
             content=self.content,
-            date_posted=self.date_posted,
-            date_published=self.date_published
+            datetime_posted=self.date_posted,
+            datetime_published=self.date_published
         )
 
     def update_post(self, post_id):
@@ -85,13 +100,13 @@ class Post(object):
             self.db.make_query(
                 '''
                 UPDATE post
-                SET title = "{}", content = "{}", date_posted = "{}", date_published = "{}"
+                SET title = "{}", content = "{}", datetime_posted = "{}", datetime_published = "{}"
                 WHERE post_id = {}
                 '''.format(
                     self.title,
                     self.content,
-                    self.date_posted,
-                    self.date_published,
+                    self.datetime_posted,
+                    self.datetime_published,
                     self.post_id
                 )
             )
@@ -112,61 +127,9 @@ class Post(object):
 
 
 if __name__ == "__main__":
-    p = Post()
-
-    post_data = p.get_post(6956534409)
-    print(post_data)
-
-    p = Post(post_data[0])
-
-    print('Post attributes: ',
-          p.post_id,
-          p.username,
-          p.title,
-          p.content,
-          p.datetime_posted,
-          p.datetime_published
-          )
-
-    # print(repr(p))
+    p = Post(
+        title='hello world',
+        content='some rambling nonsense probably'
+    )
 
     print(p)
-
-    # print()
-    # print(sys.path)
-
-    # print(
-    #     sys.path.append(os.path.join(os.getcwd()))
-    # )
-    # print()
-    # print(sys.path)
-
-    # p = Post(
-    #     title='test post 4',
-    #     content='some content again...i should just kill myself already'
-    # )
-
-    # print(
-    #     p.username,
-    #     p.title,
-    #     p.content,
-    #     p.date_posted,
-    #     p.date_published,
-    #     p.post_id
-    # )
-
-    # p.create_post()
-
-    # print('post_id is: ', p.post_id, type(p.post_id))
-    # p.post_id = get_id()
-    # print('post_id is: ', p.post_id, type(p.post_id))
-
-    # print(p.get_post(905837544))
-
-    # print(p.post_id, p.title, p.content, p.date_posted)
-
-    # p.create_post()
-
-    # print(p.get_post(9058375446))
-
-    # print(p.get_posts())
