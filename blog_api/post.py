@@ -87,8 +87,8 @@ class Post(object):
             username=self.username,
             title=self.title,
             content=self.content,
-            datetime_posted=self.date_posted,
-            datetime_published=self.date_published
+            datetime_posted=self.datetime_posted,
+            datetime_published=self.datetime_published
         )
 
     def update_post(self, post_id):

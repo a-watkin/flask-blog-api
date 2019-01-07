@@ -2,7 +2,6 @@
 from flask import Blueprint, jsonify, request
 from .post import Post
 
-
 post_blueprint = Blueprint('post', __name__)
 
 
@@ -23,7 +22,18 @@ def get_post(post_id):
 
 @post_blueprint.route('/', methods=['POST'])
 def create_post():
-    return 'you got to the post endpoint'
+    json_data = request.json
+    print(json_data)
+
+    p = Post(json_data)
+    print(p)
+    p.create_post()
+    post_data = p.get_post(p.post_id)
+
+    if post_data:
+        return jsonify(post_data[0]), 201
+    else:
+        return jsonify({}), 409
 
 
 @post_blueprint.route('/<int:post_id>', methods=['PUT'])
