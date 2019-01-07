@@ -23,6 +23,14 @@ def get_post(post_id):
 
 @post_blueprint.route('/<int:post_id>', methods=['POST'])
 def create_post(post_id):
+    pass
+
+
+@post_blueprint.route('/api/post/<int:id>', methods=['PUT'])
+def edit_post(id):
+    """
+    Update the specified post.
+    """
     print('getting here?')
     print('post_id is ', post_id)
     args = request.args.to_dict()
@@ -53,11 +61,3 @@ def create_post(post_id):
     else:
         print('resource does not exist')
     return jsonify({}), 404
-
-
-@post_blueprint.route('/api/post/<int:id>', methods=['PUT'])
-def edit_post(id):
-    """
-    Update the specified post.
-    """
-    return {}
