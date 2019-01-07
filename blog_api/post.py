@@ -23,15 +23,37 @@ except Exception as e:
 
 
 class Post(object):
-    def __init__(self, title=None, content=None):
-        self.post_id = get_id()
-        self.username = 'a'
-        self.title = title
-        self.content = content
-        self.date_posted = datetime.datetime.now()
-        self.date_published = None
+    # def __init__(self, title=None, content=None):
+        # self.post_id = get_id()
+        # self.username = 'a'
+        # self.title = title
+        # self.content = content
+        # self.date_posted = datetime.datetime.now()
+        # self.date_published = None
+        # # access to the db
+        # self.db = Database()
+
+    def __init__(self, *initial_data, **kwargs):
+        for dictionary in initial_data:
+            for key in dictionary:
+                setattr(self, key, dictionary[key])
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
         # access to the db
         self.db = Database()
+
+    def __repr__(self):
+        pass
+
+    def __str__(self):
+        return f'''
+        A blog post: \n
+        post_id: {self.post_id}\n
+        title: {self.title}\n
+        content: {self.content}\n
+        datetime_posted: {self.datetime_posted}\n
+        datetime_published: {self.datetime_published}\n
+        '''
 
     def get_posts(self):
         data = self.db.get_rows('post')
@@ -92,9 +114,23 @@ class Post(object):
 if __name__ == "__main__":
     p = Post()
 
-    print(
-        p.get_posts()
-    )
+    post_data = p.get_post(6956534409)
+    print(post_data)
+
+    p = Post(post_data[0])
+
+    print('Post attributes: ',
+          p.post_id,
+          p.username,
+          p.title,
+          p.content,
+          p.datetime_posted,
+          p.datetime_published
+          )
+
+    # print(repr(p))
+
+    print(p)
 
     # print()
     # print(sys.path)
@@ -105,21 +141,21 @@ if __name__ == "__main__":
     # print()
     # print(sys.path)
 
-    p = Post(
-        title='test post 2',
-        content='some other content'
-    )
+    # p = Post(
+    #     title='test post 4',
+    #     content='some content again...i should just kill myself already'
+    # )
 
-    print(
-        p.username,
-        p.title,
-        p.content,
-        p.date_posted,
-        p.date_published,
-        p.post_id
-    )
+    # print(
+    #     p.username,
+    #     p.title,
+    #     p.content,
+    #     p.date_posted,
+    #     p.date_published,
+    #     p.post_id
+    # )
 
-    p.create_post()
+    # p.create_post()
 
     # print('post_id is: ', p.post_id, type(p.post_id))
     # p.post_id = get_id()
