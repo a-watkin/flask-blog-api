@@ -71,3 +71,16 @@ def edit_post(post_id):
     else:
         print('resource does not exist')
     return jsonify({}), 404
+
+
+@post_blueprint.route('/<int:post_id>', methods=['DELETE'])
+def delete_post(post_id):
+    p = Post()
+    # check post exists
+    post_data = p.get_post(post_id)
+    if post_data:
+        # method return true is the post no longer exists
+        if p.remove_post(post_id):
+            return jsonify({}), 200
+    else:
+        return jsonify({}), 404
