@@ -1,0 +1,46 @@
+/api/posts
+
+
+CRUD
+--------------------------------------
+create
+
+Method POST
+
+/api/posts/id
+
+
+--------------------------------------
+Read - all posts, specific post with post id argument
+
+Method GET
+
+/api/posts/id
+
+
+--------------------------------------
+Update/Replace - update the given post
+
+Method PUT
+
+wihtout and id this is not allowed 405
+
+
+
+
+Update/Modify
+Method PATCH
+
+
+
+/api/posts/
+
+
+
+
+
+
+
+
+
+/api/posts/tags/tag_name
