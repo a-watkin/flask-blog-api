@@ -9,7 +9,7 @@ app.config.update(
     SECRET_KEY='whyohwhy'
 )
 
-app.register_blueprint(post_blueprint, url_prefix="/api/post")
+app.register_blueprint(post_blueprint, url_prefix="/api/posts")
 
 
 @app.route('/')

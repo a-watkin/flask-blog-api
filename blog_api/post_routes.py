@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify, request
 from .post import Post
 
-post_blueprint = Blueprint('post', __name__)
+post_blueprint = Blueprint('posts', __name__)
 
 
 @post_blueprint.route('/', methods=['GET'])
