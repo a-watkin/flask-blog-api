@@ -22,6 +22,7 @@ def get_post(post_id):
 
 @post_blueprint.route('/', methods=['POST'])
 def create_post():
+    print('hello from create_post')
     json_data = request.json
     print(json_data)
 
