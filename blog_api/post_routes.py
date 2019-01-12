@@ -42,12 +42,11 @@ def edit_post(post_id):
     """
     Update the specified post.
     """
-    print('getting here?')
-    print('post_id is ', post_id)
-    args = request.args.to_dict()
-    print('args is: ', args)
+    json_data = request.json
     p = Post()
     post_data = p.get_post(post_id)
+
+    print('json data is ', json_data)
 
     if post_data:
         print('what is post data here?', post_data)
@@ -56,17 +55,17 @@ def edit_post(post_id):
 
         # if args has a key that is also in p then
         # update the value of p to be that of args
-        print('args values are ', args)
-        for key in args.keys():
+        print('args values are ', json_data)
+        for key in json_data.keys():
             if key in post_data[0]:
-                post_data[0][key] = args[key]
+                post_data[0][key] = json_data[key]
             print(key)
 
         # make new instance of Post with the data from the db
         p = Post(post_data[0])
 
-        import inspect
-        print(inspect.getmembers(p, lambda a: not(inspect.isroutine(a))))
+        # import inspect
+        # print(inspect.getmembers(p, lambda a: not(inspect.isroutine(a))))
 
         return jsonify(post_data), 201
     else:
