@@ -2,6 +2,7 @@
 import os
 import sys
 import datetime
+from collections import defaultdict
 
 try:
     """
@@ -34,6 +35,8 @@ class Post(object):
         # self.db = Database()
 
     def __init__(self, *initial_data, **kwargs):
+        print(initial_data, kwargs)
+
         for dictionary in initial_data:
             for key in dictionary:
                 setattr(self, key, dictionary[key])
@@ -75,7 +78,10 @@ class Post(object):
         return data
 
     def get_post(self, post_id):
+        print('get_post, ', post_id)
+        # this query is returning an empty list
         data = self.db.get_row('post', 'post_id', post_id)
+        print('get_post data, ', data)
         return data
 
     def create_post(self):
@@ -106,6 +112,7 @@ class Post(object):
         """
 
         if self.get_post(post_id):
+            print('getting this far?')
             self.db.make_query(
                 '''
                 UPDATE post
@@ -119,6 +126,8 @@ class Post(object):
                     self.post_id
                 )
             )
+
+            return True
         else:
             return False
 
@@ -136,9 +145,10 @@ class Post(object):
 
 
 if __name__ == "__main__":
-    p = Post(
-        title='hello world',
-        content='some rambling nonsense probably'
-    )
+    p = Post()
+    # p = Post(
+    #     title='hello world',
+    #     content='some rambling nonsense probably'
+    # )
 
-    print(p)
+    # print(p)

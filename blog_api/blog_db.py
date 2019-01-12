@@ -68,24 +68,40 @@ class Database(object):
             print('insert_data problem ', e)
 
     def make_query(self, query_string):
+        print()
+        print('make_query ', query_string)
+        print()
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
             return [x for x in c.execute(query_string)]
 
     def get_row(self, table_name, id_name, id_value):
-        q_data = None
-        with sqlite3.connect(self.db_name) as connection:
-            c = connection.cursor()
-            c.row_factory = sqlite3.Row
-            q_data = c.execute(
-                '''
-                SELECT * FROM {} WHERE {} = "{}"
-                '''.format(
-                    table_name, id_name, id_value
-                )
-            )
+        print('get_row called ', table_name, id_name, id_value)
 
-        return [dict(ix) for ix in q_data]
+        print('query string is \n',
+              '''
+                    SELECT * FROM {} WHERE {} = "{}"
+                    '''.format(
+                  table_name, id_name, id_value
+              ))
+
+        try:
+            q_data = None
+            with sqlite3.connect(self.db_name) as connection:
+                c = connection.cursor()
+                c.row_factory = sqlite3.Row
+                q_data = c.execute(
+                    '''
+                    SELECT * FROM {} WHERE {} = "{}"
+                    '''.format(
+                        table_name, id_name, id_value
+                    )
+                )
+
+            return [dict(ix) for ix in q_data]
+
+        except Exception as e:
+            print('problem getting row ', e)
 
     def get_rows(self, table_name):
         q_data = None

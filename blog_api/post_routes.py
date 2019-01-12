@@ -42,39 +42,47 @@ def edit_post(post_id):
     """
     Update the specified post.
     """
+
     json_data = request.json
-    p = Post()
-    # gets old post
-    post_data = p.get_post(post_id)
+    print(json_data)
+    if json_data:
+        json_data['post_id'] = post_id
+        try:
+            p = Post(json_data)
+            post_data = p.get_post(post_id)
+            # check that the post already exists
+            if post_data:
+                # then merge the two
+                for key in json_data.keys():
+                    if key in post_data[0]:
+                        post_data[0][key] = json_data[key]
+                
+            print(p)
+            # save to the db
+            p.update_post(p.post_id)
 
-    print('json data is ', json_data)
+            return jsonify(post_data), 201
+                
 
-    if post_data:
-        print('what is post data here?', post_data)
-        # for key, value in args:
-        #     setattr(p, key, args[key])
 
-        # if args has a key that is also in p then
-        # update the value of p to be that of args
-        print('args values are ', json_data)
-        for key in json_data.keys():
-            if key in post_data[0]:
-                post_data[0][key] = json_data[key]
-            print(key)
+        except Exception as e:
+            print('Problem making object ', e)
+        
 
-        # make new instance of Post with the data from the db
+    # p = Post()
+    # # gets old post
+    # post_data = p.get_post(post_id)
+    # print('post_data \n', post_data)
 
-        p = Post(post_data[0])
-        print(p.title)
-        # save to the db
-        p.update_post(p.post_id)
+    # print('json data is ', json_data)
 
-        # import inspect
-        # print(inspect.getmembers(p, lambda a: not(inspect.isroutine(a))))
+    # print(p.__str__())
 
-        return jsonify(post_data), 201
-    else:
-        print('resource does not exist')
+    # if post_data:
+
+    #     return jsonify(post_data), 201
+    # else:
+    #     print('resource does not exist')
     return jsonify({}), 404
 
 
