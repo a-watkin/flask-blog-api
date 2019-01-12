@@ -92,6 +92,15 @@ class Post(object):
         )
 
     def update_post(self, post_id):
+        # these values are ok
+        print('update_post, ',
+              post_id,
+              self.title,
+              self.content,
+              self.datetime_posted,
+              self.datetime_published,
+              self.post_id)
+
         """
         post_id shouldn't change.
         """

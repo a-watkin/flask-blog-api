@@ -44,6 +44,7 @@ def edit_post(post_id):
     """
     json_data = request.json
     p = Post()
+    # gets old post
     post_data = p.get_post(post_id)
 
     print('json data is ', json_data)
@@ -62,7 +63,11 @@ def edit_post(post_id):
             print(key)
 
         # make new instance of Post with the data from the db
+
         p = Post(post_data[0])
+        print(p.title)
+        # save to the db
+        p.update_post(p.post_id)
 
         # import inspect
         # print(inspect.getmembers(p, lambda a: not(inspect.isroutine(a))))
