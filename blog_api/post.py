@@ -24,40 +24,41 @@ except Exception as e:
 
 
 class Post(object):
-    # def __init__(self, title=None, content=None):
-        # self.post_id = get_id()
-        # self.username = 'a'
-        # self.title = title
-        # self.content = content
-        # self.date_posted = datetime.datetime.now()
-        # self.date_published = None
-        # # access to the db
-        # self.db = Database()
+    def __init__(self, *args, **kwargs):
+        print(args, '\nkwargs\n', kwargs)
 
-    def __init__(self, *initial_data, **kwargs):
-        print(initial_data, kwargs)
-
-        for dictionary in initial_data:
+        for dictionary in args:
             for key in dictionary:
                 setattr(self, key, dictionary[key])
         for key in kwargs:
+            print('key', key)
             setattr(self, key, kwargs[key])
         # access to the db
         self.db = Database()
 
-        # this is not ideal, but I need some default values
-        # if none are supplied and I also need to make
-        # class instances from key value pairs
-        if 'post_id' not in kwargs:
+        # really not ideal but i need some deault values beyond just None for a lot of these
+        if 'post_id' not in self.__dict__:
+            print('No post_id, so adding it')
             self.post_id = get_id()
 
-        if 'username' not in kwargs:
+        if 'username' not in self.__dict__:
+            print('No username, so adding it')
             self.username = 'a'
 
-        if 'datetime_posted' not in kwargs:
+        if 'title' not in self.__dict__:
+            print('No title, so adding it')
+            self.title = None
+
+        if 'content' not in self.__dict__:
+            print('No content, so adding it')
+            self.content = None
+
+        if 'datetime_posted' not in self.__dict__:
+            print('No datetime_posted, so adding it')
             self.datetime_posted = datetime.datetime.now()
 
-        if 'datetime_published' not in kwargs:
+        if 'datetime_published' not in self.__dict__:
+            print('No datetime_published, so adding it')
             self.datetime_published = None
 
     def __repr__(self):
@@ -145,10 +146,10 @@ class Post(object):
 
 
 if __name__ == "__main__":
-    p = Post()
+    p = Post(title='test')
     # p = Post(
     #     title='hello world',
     #     content='some rambling nonsense probably'
     # )
 
-    # print(p)
+    print(p)

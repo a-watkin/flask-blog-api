@@ -42,47 +42,36 @@ def edit_post(post_id):
     """
     Update the specified post.
     """
-
     json_data = request.json
-    print(json_data)
+    # print(json_data)
     if json_data:
+        print('url post_id \n', post_id)
         json_data['post_id'] = post_id
         try:
             p = Post(json_data)
+            print(p)
             post_data = p.get_post(post_id)
+
+            # assert json_data['post_id'] == p.post_id
+            print('json post_id', json_data['post_id'],
+                  'p.post_id', p.post_id)
+
             # check that the post already exists
             if post_data:
                 # then merge the two
                 for key in json_data.keys():
                     if key in post_data[0]:
                         post_data[0][key] = json_data[key]
-                
+
             print(p)
             # save to the db
             p.update_post(p.post_id)
 
             return jsonify(post_data), 201
-                
-
 
         except Exception as e:
             print('Problem making object ', e)
-        
 
-    # p = Post()
-    # # gets old post
-    # post_data = p.get_post(post_id)
-    # print('post_data \n', post_data)
-
-    # print('json data is ', json_data)
-
-    # print(p.__str__())
-
-    # if post_data:
-
-    #     return jsonify(post_data), 201
-    # else:
-    #     print('resource does not exist')
     return jsonify({}), 404
 
 
