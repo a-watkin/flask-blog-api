@@ -43,18 +43,12 @@ def edit_post(post_id):
     Update the specified post.
     """
     json_data = request.json
-    # print(json_data)
+
     if json_data:
-        print('url post_id \n', post_id)
         json_data['post_id'] = post_id
         try:
             p = Post(json_data)
-            print(p)
             post_data = p.get_post(post_id)
-
-            # assert json_data['post_id'] == p.post_id
-            print('json post_id', json_data['post_id'],
-                  'p.post_id', p.post_id)
 
             # check that the post already exists
             if post_data:
@@ -63,7 +57,6 @@ def edit_post(post_id):
                     if key in post_data[0]:
                         post_data[0][key] = json_data[key]
 
-            print(p)
             # save to the db
             p.update_post(p.post_id)
 
