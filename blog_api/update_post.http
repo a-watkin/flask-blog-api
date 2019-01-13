@@ -1,0 +1,7 @@
+PUT http://127.0.0.1:5000/api/posts/1842890183
+content-type: application/json
+
+{
+    "title": "beep",
+    "content": "I come in peace"
+}

@@ -116,7 +116,7 @@ dmypy.json
 
 # my files
 flickr-info.txt
-*.http
+
 FLICKR_API_KEYS.py
 *.json
 *.csv
