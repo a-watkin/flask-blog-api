@@ -124,7 +124,7 @@ FLICKR_API_KEYS.py
 *.jpg
 *.JPG
 *.jpg?zz=1
-*.db
+
 
 # my directories - contain pictures/data
 /my-exif-data
