@@ -2,6 +2,6 @@ POST http://127.0.0.1:5000/api/posts/
 content-type: application/json
 
 {
-    "title": "a chicken bucket on his head",
-    "content": "I come in peace"
+    "title": "unique title here",
+    "content": "what why?"
 }

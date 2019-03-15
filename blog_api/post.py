@@ -1,6 +1,3 @@
-
-import os
-import sys
 import datetime
 from collections import defaultdict
 
@@ -15,10 +12,10 @@ except Exception as e:
     Running as module.
     """
     print('\nRunning as a module, for testing\n')
-    # print(e)
-    # sys.path.append('/home/a/flask-blog-api/app')
-    # print('added to path ', sys.path)
+    import os
+    import sys
 
+    sys.path.append(os.getcwd())
     from utils import get_id
     from blog_db import Database
 
@@ -152,4 +149,4 @@ if __name__ == "__main__":
     #     content='some rambling nonsense probably'
     # )
 
-    print(p)
+    print(p.get_posts())

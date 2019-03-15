@@ -53,4 +53,4 @@ def create_database(db_name):
 
 
 if __name__ == "__main__":
-    create_database()
+    create_database('without_sql_alchemy.db')
