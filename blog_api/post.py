@@ -16,47 +16,18 @@ except Exception as e:
     import sys
 
     sys.path.append(os.getcwd())
-    from utils import get_id
+    import utils
     from blog_db import Database
 
 
 class Post(object):
-    def __init__(self, *args, **kwargs):
-        print(args, '\nkwargs\n', kwargs)
-
-        for dictionary in args:
-            for key in dictionary:
-                setattr(self, key, dictionary[key])
-        for key in kwargs:
-            print('key', key)
-            setattr(self, key, kwargs[key])
-        # access to the db
-        self.db = Database()
-
-        # really not ideal but i need some deault values beyond just None for a lot of these
-        if 'post_id' not in self.__dict__:
-            print('No post_id, so adding it')
-            self.post_id = get_id()
-
-        if 'username' not in self.__dict__:
-            print('No username, so adding it')
-            self.username = 'a'
-
-        if 'title' not in self.__dict__:
-            print('No title, so adding it')
-            self.title = None
-
-        if 'content' not in self.__dict__:
-            print('No content, so adding it')
-            self.content = None
-
-        if 'datetime_posted' not in self.__dict__:
-            print('No datetime_posted, so adding it')
-            self.datetime_posted = datetime.datetime.now()
-
-        if 'datetime_published' not in self.__dict__:
-            print('No datetime_published, so adding it')
-            self.datetime_published = None
+    def __init__(self, post_id=None, username=None, title=None, content=None, datetime_posted=None, datetime_published=None):
+        self.post_id = post_id or utils.get_id()
+        self.username = username or 'a'
+        self.title = title,
+        self.content = content
+        self.datetime_posted = datetime_posted or datetime.datetime.now()
+        self.datetime_published = datetime_published or datetime.datetime.now()
 
     def __repr__(self):
         pass
@@ -144,9 +115,10 @@ class Post(object):
 
 if __name__ == "__main__":
     p = Post(title='test')
-    # p = Post(
-    #     title='hello world',
-    #     content='some rambling nonsense probably'
-    # )
+    p = Post(
+        title='hello world',
+        content='some rambling nonsense probably'
+    )
+    print(p)
 
-    print(p.get_posts())
+    # print(p.get_posts())
