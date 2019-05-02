@@ -16,18 +16,19 @@ except Exception as e:
     import sys
 
     sys.path.append(os.getcwd())
-    import utils
+    from utils import get_id
     from blog_db import Database
 
 
 class Post(object):
     def __init__(self, post_id=None, username=None, title=None, content=None, datetime_posted=None, datetime_published=None):
-        self.post_id = post_id or utils.get_id()
+        self.post_id = post_id or get_id()
         self.username = username or 'a'
         self.title = title,
         self.content = content
         self.datetime_posted = datetime_posted or datetime.datetime.now()
         self.datetime_published = datetime_published or datetime.datetime.now()
+        self.db = Database()
 
     def __repr__(self):
         pass
