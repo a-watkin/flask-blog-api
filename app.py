@@ -17,6 +17,7 @@ def hello_world():
     return 'sure does!'
 
 
+# Run as python app.py
 if __name__ == '__main__':
     export_settings = [
         "export FLASK_APP=app.py",
