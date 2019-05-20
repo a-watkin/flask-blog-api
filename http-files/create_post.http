@@ -1,7 +1,9 @@
 POST http://127.0.0.1:5000/api/posts/
+# POST http://127.0.0.1:5000/blog/api/
 content-type: application/json
 
 {
     "title": "when will ",
-    "content": "blah?"
+    "content": "blah?",
+    "datetime_published": "1871-09-01 23:52:21.23456"
 }

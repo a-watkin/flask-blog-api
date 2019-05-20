@@ -24,17 +24,19 @@ def get_post(post_id):
 def create_post():
     print('hello from create_post')
     json_data = request.json
-    print(json_data)
+    # print(json_data)
 
     p = Post(json_data)
-    print(p)
-    p.create_post()
-    post_data = p.get_post(p.post_id)
+    # print(p)
+    # p.create_post()
+    # post_data = p.get_post(p.post_id)
 
-    if post_data:
-        return jsonify(post_data[0]), 201
-    else:
-        return jsonify({}), 409
+    # if post_data:
+    #     return jsonify(post_data[0]), 201
+    # else:
+    #     return jsonify({}), 409
+
+    return 'i have the dumb'
 
 
 @post_blueprint.route('/<int:post_id>', methods=['PUT'])

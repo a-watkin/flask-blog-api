@@ -21,14 +21,18 @@ except Exception as e:
 
 
 class Post(object):
-    def __init__(self, post_id=None, username=None, title=None, content=None, datetime_posted=None, datetime_published=None):
-        self.post_id = post_id or get_id()
-        self.username = username or 'a'
-        self.title = title,
-        self.content = content
-        self.datetime_posted = datetime_posted or datetime.datetime.now()
-        self.datetime_published = datetime_published or datetime.datetime.now()
-        self.db = Database()
+    def __init__(self, **kwargs):
+        for key in kwargs:
+            setattr(self, key, kwargs[key])
+
+        if not hasattr(self, 'post_id'):
+            self.post_id = get_id()
+
+        if not hasattr(self, 'datetime_posted'):
+            self.datetime_posted = datetime.datetime.now()
+
+        if not hasattr(self, 'datetime_published'):
+            self.datetime_published = datetime.datetime.now()
 
     def __repr__(self):
         pass
