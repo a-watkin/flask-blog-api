@@ -71,9 +71,11 @@ def edit_post(post_id):
 
 @post_blueprint.route('/<int:post_id>', methods=['DELETE'])
 def delete_post(post_id):
+    print('hello from delete post')
     p = Post()
     # check post exists
     post_data = p.get_post(post_id)
+    print('delete ', post_data)
     if post_data:
         # method return true is the post no longer exists
         if p.remove_post(post_id):
