@@ -21,18 +21,33 @@ except Exception as e:
 
 
 class Post(object):
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
+        # args contains the dictionary/JSON within a tuple
+        # JSON or a dict works ok
+        for dictionary in args:
+            for key in dictionary:
+                setattr(self, key, dictionary[key])
+
+        # Here incase of instantiating the class with names arguments
         for key in kwargs:
+            print(key, kwargs[key])
             setattr(self, key, kwargs[key])
 
+        # default values if not present in args or kwargs
         if not hasattr(self, 'post_id'):
             self.post_id = get_id()
+
+        if not hasattr(self, 'username'):
+            self.username = 'a'
 
         if not hasattr(self, 'datetime_posted'):
             self.datetime_posted = datetime.datetime.now()
 
         if not hasattr(self, 'datetime_published'):
             self.datetime_published = datetime.datetime.now()
+
+        # database connection
+        self.db = Database()
 
     def __repr__(self):
         pass
@@ -81,10 +96,7 @@ class Post(object):
               self.datetime_published,
               self.post_id)
 
-        """
-        post_id shouldn't change.
-        """
-
+        # post_id shouldn't change.
         if self.get_post(post_id):
             print('getting this far?')
             self.db.make_query(
